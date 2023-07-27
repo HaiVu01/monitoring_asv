@@ -1,0 +1,137 @@
+<!-- Load Rubik font from Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet" />
+<style>
+  i,
+  a {
+    color: #000 !important;
+  }
+</style>
+<!-- Load static files in Django -->
+{% load static %}
+<br /><br />
+<!-- Footer section with light background -->
+<footer class="bg-light">
+  <!-- Container with padding top and border top -->
+  <nav class="container-fluid pt-5 border-top">
+    <!-- Main row for footer content -->
+    <div class="row">
+      <!-- Column for logo -->
+      <div class="col-md-3 col-sm-12 mb-3 text-center">
+        <!-- Link to dashboard index -->
+        <a class="d-inline-block" href="{% url 'dashboard-index' %}">
+          <!-- Logo container with flexbox and text-uppercase class -->
+          <div class="d-flex align-items-center text-uppercase">
+            <!-- Logo image -->
+            <img
+              src="{% static 'image/mechatronic.png' %}"
+              alt=""
+              width="200"
+              class="d-inline-block align-text-top"
+            />
+          </div>
+        </a>
+      </div>
+
+      <!-- Column for footer menu -->
+      <div class="col-md-9 col-sm-12">
+        <!-- Nested row for footer menu items -->
+        <div class="row">
+          <!-- Contact Us section -->
+          <div class="col-md-4 col-sm-6 mb-4">
+            <h5 class="mb-4 font-weight-bold text-uppercase">Contact Us</h5>
+            <!-- Unstyled list for contact details -->
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <i class="fa fa-map-marker mr-2"></i> 12 Nguyễn Văn Bảo, Gò Vấp,
+                Tp.HCM Khoa Công nghệ Cơ khí - Tầng 2, Nhà X
+              </li>
+              <li class="mb-2">
+                <i class="fa fa-envelope mr-2"></i>
+                haiminh.vuphan01@gmail.com
+              </li>
+              <li class="mb-2"><i class="fa fa-phone mr-2"></i> 0978601101</li>
+            </ul>
+          </div>
+
+          <!-- Developers section -->
+          <div class="col-md-3 col-sm-6 mb-4">
+            <h5 class="mb-4 font-weight-bold text-uppercase">Developers</h5>
+            <!-- Unstyled list for developer links -->
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="https://github.com/naologic"
+                  ><i class="fa fa-code mr-2"></i> Open Source</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="https://stackshare.io/naologic"
+                  ><i class="fa fa-cogs mr-2"></i> Technology</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Company section -->
+          <div class="col-md-3 col-sm-6 mb-4">
+            <h5 class="mb-4 font-weight-bold text-uppercase">Company</h5>
+            <!-- Unstyled list for company links -->
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="../about-naologic.html"
+                  ><i class="fa fa-info-circle mr-2"></i> About</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="https://blog.naologic.com"
+                  ><i class="fa fa-newspaper-o mr-2"></i> Blog</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Connect section -->
+          <div class="col-md-2 col-sm-6 mb-4">
+            <h5 class="mb-4 font-weight-bold text-uppercase">Connect</h5>
+            <!-- Unstyled list for social media links -->
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="https://www.linkedin.com/company/naologic"
+                  ><i class="fa fa-linkedin mr-2"></i> LinkedIn</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="https://github.com/naologic" target="_blank"
+                  ><i class="fa fa-github mr-2"></i> Github</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="https://www.facebook.com/naologic/" target="_blank"
+                  ><i class="fa fa-facebook mr-2"></i> Facebook</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="https://www.youtube.com/channel/UCtHmuf2oQLnksokfz8GIbKA"
+                  target="_blank"
+                  ><i class="fa fa-youtube mr-2"></i> YouTube</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- End of nested row for footer menu items -->
+      </div>
+    </div>
+    <!-- Container for copyright information -->
+    <div class="container-fluid py-3">
+      <!-- Row for copyright information -->
+      <div class="row">
+        <!-- Column with centered text -->
+        <div class="col-md-12 text-center">
+          <!-- Copyright information -->
+          <p class="mb-0">© 2023 YourCompany. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+</footer>

@@ -1,0 +1,84 @@
+{% extends 'partials/base.html' %} {% block content %}
+
+<!-- Customs CSS -->
+<!-- The CSS file for the custom styles of your website -->
+{% load static %}
+<link rel="stylesheet" href="/static/css/mapSelection.css" />
+
+<div class="container-fluid">
+  <br />
+  <!-- Display the heading "Navigation" -->
+  <div class="text-center text-uppercase text_bar">
+    <h3>Navigation</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <!-- Table to show the coordinates -->
+      <div class="container-fluid">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">Zone</th>
+                <th class="text-center">Latitude</th>
+                <th class="text-center">Longitude</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              {% for location in locations %}
+              <tr id="R{{forloop.counter}}">
+                <td class="row-index text-center">
+                  <p>{{forloop.counter}}</p>
+                </td>
+                <td>
+                  <input
+                    type="float"
+                    class="text-center container-fluid"
+                    id="latitude_{{forloop.counter}}"
+                    value="{{location.latitude}}"
+                    name="latitude-{{forloop.counter}}"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="float"
+                    class="text-center container-fluid"
+                    id="longitude_{{forloop.counter}}"
+                    value="{{location.longitude}}"
+                    name="Longitude-{{forloop.counter}}"
+                  />
+                </td>
+                <td class="text-center">
+                  <button
+                    class="btn btn-danger remove"
+                    type="button"
+                    data-row-id="R{{forloop.counter}}"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- Submit button -->
+        <button class="btn btn-md btn-primary" id="submitBtn" type="button">
+          Submit
+        </button>
+      </div>
+      <br />
+    </div>
+    <!-- Map container -->
+    <div class="col-md-12 col-lg-6">
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Customs JS-->
+<!-- The JS file for the custom styles of your website -->
+<script src="/static/js/mapSlection.js"></script>
+{% endblock %}

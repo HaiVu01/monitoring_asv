@@ -1,0 +1,109 @@
+{% extends 'partials/base.html' %} {% block content %}
+
+<!-- Customs CSS -->
+<!-- The CSS file for the custom styles of your website -->
+{% load static %}
+<link rel="stylesheet" href="/static/css/mapChecking.css" />
+
+<div class="container-fluid">
+  <br />
+  <!-- Display the heading "Navigation" -->
+  <div class="text-center text-uppercase text_bar">
+    <h3>Checking</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <!-- Table to show the coordinates -->
+      <div class="container-fluid">
+        <div class="table-container">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Latitude</th>
+                <th class="text-center">Longitude</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              {% for location in locations %}
+              <tr id="R{{forloop.counter}}">
+                <td class="row-index text-center">
+                  <p>{{forloop.counter}}</p>
+                </td>
+                <td>
+                  <p
+                    class="text-center container-fluid"
+                    id="latitude_{{forloop.counter}}"
+                  >
+                    {{location.latitude}}
+                  </p>
+                </td>
+                <td>
+                  <p
+                    class="text-center container-fluid"
+                    id="longitude_{{forloop.counter}}"
+                  >
+                    {{location.longitude}}
+                  </p>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <br />
+        
+          <div class="table-container">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Zone</th>
+                  <th class="text-center">Latitude</th>
+                  <th class="text-center">Longitude</th>
+                  <th class="text-center">Error</th>
+                </tr>
+              </thead>
+              <tbody id="zoneTable">
+                {% for location in locations %}
+                <tr id="Z{{forloop.counter}}">
+                  <td class="row-index text-center">
+                    <p>{{forloop.counter}}</p>
+                  </td>
+                  <td>
+                    <p
+                      class="text-center container-fluid"
+                      id="zone_latitude_{{forloop.counter}}"
+                    >
+                      {{location.latitude}}
+                    </p>
+                  </td>
+                  <td>
+                    <p
+                      class="text-center container-fluid"
+                      id="zone_longitude_{{forloop.counter}}"
+                    >
+                      {{location.longitude}}
+                    </p>
+                  </td>
+                  <td class="text-center"></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br />
+      </div>
+      <!-- Map container -->
+      <div class="col-md-12 col-lg-6">
+        <div class="map-container">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Customs JS-->
+  <!-- The JS file for the custom styles of your website -->
+  <script src="/static/js/mapChecking.js"></script>
+  {% endblock %}
+</div>

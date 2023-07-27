@@ -1,0 +1,341 @@
+{% extends 'partials/base.html'%} {% block content %}
+<div class="container-fluid dashboard-content">
+  <br />
+  <div class="ecommerce-widget">
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="text-muted text-capitalize">Avg Humidity</h5>
+            <div class="metric-value d-inline-block">
+              <h1 class="mb-1">0</h1>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div id="sparkline-revenue"></div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="text-muted text-capitalize">Avg Temperature</h5>
+            <div class="metric-value d-inline-block">
+              <h1 class="mb-1">0</h1>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div id="sparkline-revenue2"></div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="text-muted text-capitalize">Avg Dissolved Oxygen</h5>
+            <div class="metric-value d-inline-block">
+              <h1 class="mb-1">0</h1>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div id="sparkline-revenue3"></div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="text-muted text-capitalize">Avg Pressure</h5>
+            <div class="metric-value d-inline-block">
+              <h1 class="mb-1">0</h1>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <div id="sparkline-revenue4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+    <div class="card">
+      <h5 class="card-header">Water Parameter by Zone</h5>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table zoneDataTable">
+            <thead class="bg-light">
+              <tr class="border-0">
+                <th class="border-0 text-uppercase">Zone</th>
+                <th class="border-0 text-uppercase">temperature</th>
+                <th class="border-0 text-uppercase">humidity</th>
+                <th class="border-0 text-uppercase">dissolved Oxygen</th>
+                <th class="border-0 text-uppercase">air Pressure</th>
+                <th class="border-0 text-uppercase">time stamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="zoneDataZone"></td>
+                <td id="zoneDataTemperature"></td>
+                <td id="zoneDataHumidity"></td>
+                <td id="zoneDataDissolvedOxygen"></td>
+                <td id="zoneDataAirPressure"></td>
+                <td id="zoneDataTimestamp"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+    <div class="card">
+      <h5 class="card-header text-uppercase">Dissolved Oxygen</h5>
+      <div class="card-body">
+        <canvas id="oxygenChart" style="height: 354px"></canvas>
+        <div class="text-center">
+          <span class="legend-item mr-2">
+            <span class="fa-xs text-primary mr-1 legend-tile">
+              <i class="fa fa-fw fa-square-full"></i>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let lastProcessedTimestamp = null;
+  function updateSensorData() {
+    fetch("/get_latest_sensor_data/")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data) {
+          console.error("No data received from the server.");
+          return;
+        }
+        const temperatureNormalized = (data.temperature / 40) * 100;
+        const humidityNormalized = data.humidity;
+        const pressureNormalized = (data.pressure / 2000) * 100;
+        const dissolvedOxygenNormalized = (data.dissolved_oxygen / 20) * 100;
+        $(".col-12:nth-child(2) .metric-value h1").text(
+          data.temperature.toFixed(0)
+        );
+        $(".col-12:nth-child(1) .metric-value h1").text(
+          data.humidity.toFixed(0)
+        );
+        $(".col-12:nth-child(4) .metric-value h1").text(
+          data.pressure.toFixed(0)
+        );
+        $(".col-12:nth-child(3) .metric-value h1").text(
+          data.dissolved_oxygen.toFixed(0)
+        );
+
+        // Update the progress bars
+        $(".col-12:nth-child(2) .progress-bar").css(
+          "width",
+          temperatureNormalized + "%"
+        );
+        $(".col-12:nth-child(1) .progress-bar").css(
+          "width",
+          humidityNormalized + "%"
+        );
+        $(".col-12:nth-child(4) .progress-bar").css(
+          "width",
+          pressureNormalized + "%"
+        );
+        $(".col-12:nth-child(3) .progress-bar").css(
+          "width",
+          dissolvedOxygenNormalized + "%"
+        );
+
+        // Update the aria-valuenow attribute
+        $(".col-12:nth-child(2) .progress-bar").attr(
+          "aria-valuenow",
+          temperatureNormalized
+        );
+        $(".col-12:nth-child(1) .progress-bar").attr(
+          "aria-valuenow",
+          humidityNormalized
+        );
+        $(".col-12:nth-child(4) .progress-bar").attr(
+          "aria-valuenow",
+          pressureNormalized
+        );
+        $(".col-12:nth-child(3) .progress-bar").attr(
+          "aria-valuenow",
+          dissolvedOxygenNormalized
+        );
+
+        // Update the colors
+        const temperatureColor =
+          data.temperature >= 18 && data.temperature <= 33 ? "green" : "red";
+        const humidityColor =
+          data.humidity >= 40 && data.humidity <= 70 ? "green" : "red";
+        const dissolvedOxygenColor =
+          data.dissolved_oxygen > 5 ? "green" : "red";
+        const pressureColor = "green";
+
+        $(".col-12:nth-child(2) .progress-bar").css(
+          "background-color",
+          temperatureColor
+        );
+        $(".col-12:nth-child(1) .progress-bar").css(
+          "background-color",
+          humidityColor
+        );
+        $(".col-12:nth-child(4) .progress-bar").css(
+          "background-color",
+          pressureColor
+        );
+        $(".col-12:nth-child(3) .progress-bar").css(
+          "background-color",
+          dissolvedOxygenColor
+        );
+      })
+      .catch((error) => console.error("Error fetching sensor data:", error));
+  }
+
+  updateSensorData();
+  setInterval(updateSensorData, 5000);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    function fetchZoneData() {
+      fetch("/get_zone_data/")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Received data:", data); // Log entire received data
+
+          // Assuming data.zones is an array, we create a table row for each zone
+          if (Array.isArray(data.zones)) {
+            let tableBody = "";
+            data.zones.forEach((zoneData) => {
+              tableBody += `<tr>
+              <td>${zoneData.zone}</td>
+              <td>${zoneData.temperature}</td>
+              <td>${zoneData.humidity}</td>
+              <td>${zoneData.dissolved_oxygen}</td>
+              <td>${zoneData.pressure}</td>
+              <td>${zoneData.timestamp}</td>
+            </tr>`;
+            });
+            document.querySelector(".zoneDataTable tbody").innerHTML =
+              tableBody;
+          }
+        })
+        .catch((error) => console.error("Error fetching zone data:", error));
+    }
+
+    fetchZoneData(); // Call the function
+    setInterval(fetchZoneData, 5000); // Refresh the data every 5 seconds
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    function fetchZoneData() {
+      fetch("/get_zone_data/")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Received data:", data); // Log entire received data
+
+          // Assuming data.zones is an array, create a table row for each zone
+          if (Array.isArray(data.zones)) {
+            let tableBody = "";
+            let zones = [];
+            let oxygenData = [];
+            data.zones.forEach((zoneData) => {
+              tableBody += `<tr>
+              <td>${zoneData.zone}</td>
+              <td>${zoneData.temperature}</td>
+              <td>${zoneData.humidity}</td>
+              <td>${zoneData.dissolved_oxygen}</td>
+              <td>${zoneData.pressure}</td>
+              <td>${zoneData.timestamp}</td>
+            </tr>`;
+
+              zones.push(zoneData.zone);
+              oxygenData.push(zoneData.dissolved_oxygen);
+            });
+            document.querySelector(".zoneDataTable tbody").innerHTML =
+              tableBody;
+
+            // Create Chart using Chart.js
+            let ctx = document.getElementById("oxygenChart").getContext("2d");
+            let myChart = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: zones,
+                datasets: [
+                  {
+                    label: "Dissolved Oxygen",
+                    data: oxygenData,
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          }
+        })
+        .catch((error) => console.error("Error fetching zone data:", error));
+    }
+
+    fetchZoneData(); // Call the function
+    setInterval(fetchZoneData, 5000); // Refresh the data every 5 seconds
+  });
+</script>
+{% endblock %}

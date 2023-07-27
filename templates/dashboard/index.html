@@ -1,0 +1,82 @@
+{% extends 'partials/base.html'%} {% block content %}
+
+<!-- Customs CSS -->
+<!-- The CSS file for the custom styles of your website -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+
+<!-- The main container for the page, designed to be fluid and responsive -->
+<div class="container-fluid">
+  <!-- The title header section, centrally aligned and styled with uppercase text -->
+  <div id="status" class="text-center text-uppercase text_bar">
+    <h2 class="font-weight-bold">Realtime Database</h2>
+    <div id="zone_status">Loading...</div>
+  </div>
+
+  <!-- The main content row of the page -->
+  <div class="row">
+    <!-- A column designed to take the full width on medium (md) screens and a third of the width on large (lg) screens -->
+    <div class="col-md-12 col-lg-4">
+      <!-- The wrapper to contain all the cards -->
+      <div class="wrapper">
+        <!-- Each card contains a circle and a text label -->
+
+        <!-- The card for displaying the Temperature -->
+        <div class="card temp">
+          <div class="circle">
+            <div class="bar"></div>
+            <div class="box"><span></span></div>
+          </div>
+          <div class="text">Temperature</div>
+        </div>
+
+        <!-- The card for displaying the Humidity -->
+        <div class="card hum">
+          <div class="circle">
+            <div class="bar"></div>
+            <div class="box"><span></span></div>
+          </div>
+          <div class="text">Humidity</div>
+        </div>
+
+        <!-- The card for displaying the Dissolved Oxygen -->
+        <div class="card do">
+          <div class="circle">
+            <div class="bar"></div>
+            <div class="box"><span></span></div>
+          </div>
+          <div class="text">Dissolved Oxygen</div>
+        </div>
+
+        <!-- The card for displaying the Pressure -->
+        <div class="card press">
+          <div class="circle">
+            <div class="bar"></div>
+            <div class="box"><span></span></div>
+          </div>
+          <div class="text">Pressure</div>
+        </div>
+      </div>
+      <!-- End of the wrapper -->
+    </div>
+    <!-- End of the first column -->
+
+    <!-- A column designed to take the full width on medium (md) screens and two-thirds of the width on large (lg) screens -->
+    <div class="col-md-12 col-lg-8">
+      <!-- The map container that holds the map -->
+      <div class="map-container">
+        <!-- The map itself, the ID is used to target the element in JavaScript -->
+        <div id="map"></div>
+      </div>
+      <!-- End of the map container -->
+    </div>
+    <!-- End of the second column -->
+  </div>
+  <!-- End of the row -->
+</div>
+<!-- End of the container-fluid -->
+
+<!-- Customs JS-->
+<!-- The JS file for the custom styles of your website -->
+<script src="/static/js/index.js"></script>
+{% endblock %}

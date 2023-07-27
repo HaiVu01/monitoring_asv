@@ -1,0 +1,79 @@
+{% load static %}
+<!-- Custom CSS for navbar -->
+<style>
+  .navbar-nav li.nav-item a.nav-link {
+    color: #000000;
+  }
+
+  .navbar-nav li.nav-item a.nav-link:hover {
+    font-weight: bold;
+  }
+</style>
+
+<!-- Navbar with light background -->
+<nav
+  class="navbar navbar-expand-lg navbar-light p-0"
+  style="background-color: #fff"
+>
+  <div class="container-fluid">
+    <!-- Nav Brand -->
+    <a class="navbar-brand d-inline-block" href="{% url 'dashboard-index' %}">
+      <div class="d-flex align-items-center text-uppercase">
+        <img
+          src="{% static 'image/mechatronic.png' %}"
+          alt="logo"
+          width="150"
+          class="d-inline-block align-text-top"
+        />
+      </div>
+    </a>
+
+    <!-- Navbar toggler for small monitors -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left Links -->
+      <ul class="navbar-nav mr-auto" style="font-size: 15px">
+        <li class="nav-item">
+          <a class="nav-link text-uppercase" href="{% url 'dashboard-index' %}"
+            >Home <span class="sr-only">(current)</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-uppercase"
+            href="{% url 'dashboard-mapSelection' %}"
+            >Map Selection</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-uppercase"
+            href="{% url 'dashboard-mapChecking' %}"
+            >Map Checking</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-uppercase"
+            href="{% url 'dashboard-monitoring' %}"
+            >Monitor</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<hr class="m-0" />
+<!-- End Navbar -->
